@@ -150,10 +150,6 @@ def keuze(informatie, difficulty):
 
   return rt.choice(kans)
 
-# Hier komt een functie die het antwoord nakijkt op basis van de eerder gekozen functie
-API_request = ''
-#gekozen_functie = keuze(API_request, 'Beginner') # Dit wordt naar de PHP gestuurt en ook gecheckt door de code hier
-
 def check(gekozen, antwoord):
   try:
     juist = smp.integrate(gekozen) # Berekent de juiste integraal
