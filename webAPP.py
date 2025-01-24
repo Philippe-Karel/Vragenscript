@@ -9,7 +9,8 @@ app = Flask(__name__)
 def vragen(): 
     try:
         difficulty = request.args.get("difficulty", "Beginner")  # Vraagt om de difficulty, waarbij Beginner standaard is (best handig dit)
-        question = vs.generate_question(difficulty)  # Replace with your actual function
+        informatie = request.args.get("informatie", [1, 1, 1, 1])
+        question = vs.keuze(difficulty)                          # Deze code kiest een vraag
 
         return jsonify({
             "status": "success",
