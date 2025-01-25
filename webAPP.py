@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify
 import tensorflow as tf
+import numpy as np
+import os
 import vragenscript as vs  # Module to generate and check questions
 
 app = Flask(__name__)
