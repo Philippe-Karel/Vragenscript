@@ -1,8 +1,14 @@
 from flask import Flask, request, jsonify
+import tensorflow as tf
+import numpy as np
+import os
 import vragenscript as vs  # Module to generate and check questions
-import AI_mode as ai  # Module for AI analysis of student calculations
 
 app = Flask(__name__)
+
+MODEL_PATH = "ai_model/fouten_AI.keras" 
+
+model = tf.keras.models.load_model(MODEL_PATH)
 
 # Endpoint to generate a question
 @app.route("/vraag_maken", methods=["GET"])
