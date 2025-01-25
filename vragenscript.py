@@ -150,9 +150,9 @@ def keuze(informatie, difficulty):
 
   return rt.choice(kans)
 
-def check(gekozen, antwoord):
+def check(vraag, antwoord):
   try:
-    juist = smp.integrate(gekozen) # Berekent de juiste integraal
+    juist = smp.integrate(vraag) # Berekent de juiste integraal
     constante = True
     leerling_antwoord = ''.join(value if not value.isalpha() or value not in 'abdefghijklmnopqrstuvwyz' else 'c' for value in leerling.lower()) # Zorgt voor de juiste constante
 
