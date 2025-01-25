@@ -1,14 +1,11 @@
 from flask import Flask, request, jsonify
 import tensorflow as tf
-import numpy as np
-import os
 import vragenscript as vs  # Module to generate and check questions
 
 app = Flask(__name__)
 
 MODEL_PATH = "ai_model/fouten_AI.keras" 
-
-model = tf.keras.models.load_model(MODEL_PATH)
+ai = tf.keras.models.load_model(MODEL_PATH)
 
 # Endpoint to generate a question
 @app.route("/vraag_maken", methods=["GET"])
@@ -56,6 +53,7 @@ def check_answer():
 
         if correct[-1] == True:  # If there's an error in the student's response format
             return jsonify({"status": "student_error", "message": "Invalid response format"}), 400
+            break
 
         elif correct[0] == True:  # If the answer is correct
             return jsonify({
