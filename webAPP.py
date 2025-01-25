@@ -1,7 +1,10 @@
-                                                                   # Hier komt de webAPP die alles linkt (ofwel de API)
+'''
+Hier komt de API die alles linkt en die ervoor zorgt dat alles onderling zal werken
+'''
 from flask import Flask, request, jsonify                          # Dit zorgt voor de framework en het vertalen van data
 import vragenscript as vs                                          # Dit creërt en checkt de vragen
 import AI_mode as ai                                               # Dit is het AI model, die ik per ongeluk AI_mode heb genoemd
+import numpy as np
                                                                    
 app = Flask(__name__)                                              
                                                                    
@@ -30,9 +33,14 @@ def check_answer():
     Hier wordt het antwoord van de leerling nagekeken en, indien het antwoord fout is, zal de AI de berekeningen nakijken
     """                                                            
     try:                                                           
-        data = request.get_json()                                  # De inkomende data ophalen. Deze wordt opgesplitst in berekeningen, studenten_antwoord en probleem
+        data = request.json                                        # De inkomende data ophalen. Deze wordt opgesplitst in berekeningen, studenten_antwoord en probleem
+
+        if not data or 'berekeningen' not in data or 'student_antwoord' not in data or 'vraag' not in data:
+          return jsonify({"status":"error"}), 400
+
+      
         student_calc = data.get("berekeningen").replace("**", "^") # Berekeningen van de student
-        student_answer = data.get("studenten_antwoord")            # Het antwoord van de student  
+        student_answer = data.get("student_antwoord")            # Het antwoord van de student  
         question = data.get("vraag")                               # De vraag die de student kreeg
         correct = vs.check(question, student_answer)               # Vraag wordt nagekeken. Functie is check(gekozen_vraag, studenten_antwoord)
 
