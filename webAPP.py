@@ -1,13 +1,18 @@
 from flask import Flask, request, jsonify
-import tensorflow as tf
-import numpy as np
-import os
+import tensorflow 
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
 import vragenscript as vs  # Module to generate and check questions
 
 app = Flask(__name__)
 
-MODEL_PATH = "ai_model/fouten_AI.keras" 
+MODEL_PATH = "ai_model/fouten_AI.keras"
+TOKENIZOR_PATH = "ai_model/tokenizor_value.json"
 ai = tf.keras.models.load_model(MODEL_PATH)
+
+with open(TOKENIZOR_PATH, 'r') as tok:
+    tok_config = tok.read()
+tokenizor = tokenizor_from_json(tok_config)
 
 # Endpoint to generate a question
 @app.route("/vraag_maken", methods=["GET"])
@@ -46,7 +51,7 @@ def check_answer():
             return jsonify({"status": "error", "message": "Missing required fields"}), 400
 
         # Extract relevant data from the request
-        student_calc = data.get("berekeningen").replace("**", "^")  # Student's calculations (adjusted for syntax)
+        student_calc = data.get("berekeningen").replace("**", "^").replace(":", "/")  # Student's calculations (adjusted for syntax)
         student_answer = data.get("student_antwoord")  # Student's final answer
         question = data.get("vraag")  # The question the student attempted
 
@@ -64,7 +69,7 @@ def check_answer():
             })
 
         else:  # If the answer is incorrect
-            # Analyze the student's calculations using the AI model
+            
             mistakes = ai.analyze_calculations(student_calc)
 
             # Return the analysis results and mark the answer as wrong
