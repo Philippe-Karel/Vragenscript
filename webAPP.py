@@ -6,13 +6,20 @@ import vragenscript as vs  # Module to generate and check questions
 
 app = Flask(__name__)
 
+# AI initialisen
 MODEL_PATH = "ai_model/fouten_AI.keras"
-TOKENIZOR_PATH = "ai_model/tokenizor_value.json"
+ai = tf.keras.models.load_model(MODEL_PATH)
+
+# Tokenizer initialisen
+TOKENIZOR_PATH = "ai_model/tokenizer.json"
 ai = tf.keras.models.load_model(MODEL_PATH)
 
 with open(TOKENIZOR_PATH, 'r') as tok:
     tok_config = tok.read()
 tokenizor = tokenizor_from_json(tok_config)
+
+# Soorten fouten noteren voor de AI
+soorten_fouten = [0, 1, 2, 3]
 
 # Endpoint to generate a question
 @app.route("/vraag_maken", methods=["GET"])
@@ -69,9 +76,11 @@ def check_answer():
             })
 
         else:  # If the answer is incorrect
+            calc_seq = tokenizer.texts_to_sequences(student_calc)
+            calc_pad = pad_sequences(calc_sec, padding='post')
+            mistakes_AI = ai.predict(student_calculations)
+            mistakes = [ind for ind, waarde in mistakes_AI if waarde > 0.5]
             
-            mistakes = ai.analyze_calculations(student_calc)
-
             # Return the analysis results and mark the answer as wrong
             return jsonify({
                 "status": "wrong",  # Indicates the answer is wrong
