@@ -163,9 +163,10 @@ def check(vraag, antwoord):
     leerling = smp.simplify(leerling_smp - smp.Symbol('c')).subs('x', x) # Zat hier een goed uur op vast. Antwoord van een leerling maakt de x een str en niet de pre-defined x variabele
 
     if leerling != juist:  # Eerste waarde is om te kijken of je de vraag goed hebt, 2e of er een constante is
-      return False, constante
+      constante = None
+      return False, constante, False
 
-    return True, constante
+    return True, constante, False
 
   except Exception as exc:
     print(f'Er is iets fout gegaan, vraag wordt fout gerekend en niks wordt geüpdate')
