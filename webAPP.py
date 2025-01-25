@@ -4,7 +4,6 @@ Hier komt de API die alles linkt en die ervoor zorgt dat alles onderling zal wer
 from flask import Flask, request, jsonify                          # Dit zorgt voor de framework en het vertalen van data
 import vragenscript as vs                                          # Dit creërt en checkt de vragen
 import AI_mode as ai                                               # Dit is het AI model, die ik per ongeluk AI_mode heb genoemd
-import numpy as np
                                                                    
 app = Flask(__name__)                                              
                                                                    
