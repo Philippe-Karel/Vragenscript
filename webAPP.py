@@ -31,21 +31,26 @@ def check_answer():
     """                                                            
     try:                                                           
         data = request.get_json()                                  # De inkomende data ophalen. Deze wordt opgesplitst in berekeningen, studenten_antwoord en probleem
-        student_calc = data.get("berekeningen")                    # Berekeningen van de student
+        student_calc = data.get("berekeningen").replace("**", "^") # Berekeningen van de student
         student_answer = data.get("studenten_antwoord")            # Het antwoord van de student  
-        question = data.get("probleem")                            # De vraag die de student kreeg
+        question = data.get("vraag")                               # De vraag die de student kreeg
         correct = vs.check(question, student_answer)               # Vraag wordt nagekeken. Functie is check(gekozen_vraag, studenten_antwoord)
-                                                                   
-        if correct:                                                
-            return jsonify({                                       
-                "status": "success"                                # Vraag is goed beantwoord, de AI zal niks hoeven doen            
-            })                                                     
-                                                                   
+
+        if correct[-1] == True:
+          return jsonify({"status": "student_error"}), 500
+        
+        elif correct[0] == True:
+          return jsonify({
+                "status": "success",
+                "constante": correct[1]
+          })
+                                                                                                                           
         else:                                                                  
             mistakes = ai.analyze_calculations(student_calc)       # Vraag is fout beantwoord, de AI kijkt alles na (ook eindantwoord als deze bij de berekeningen staat)
                                                                    #
             return jsonify({                                       # Antwoorden worden teruggestuurd
                 "status": "wrong",                                 # Vraag is fout beantwoord
+                "constante": correct[1],
                 "mistakes": mistakes                               # Fout soorten worden teruggestuurd
             })                                                     
                                                                    
