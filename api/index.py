@@ -10,11 +10,11 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 app = Flask(__name__)
 
 # AI initialisen
-MODEL_PATH = "api/ai_model/fouten_AI.keras"
+MODEL_PATH = "ai_model/fouten_AI.keras"
 ai = tf.keras.models.load_model(MODEL_PATH)
 
 # Tokenizer initialisen
-TOKENIZOR_PATH = "api/ai_model/tokenizer.json"
+TOKENIZOR_PATH = "ai_model/tokenizer.json"
 ai = tf.keras.models.load_model(MODEL_PATH)
 
 with open(TOKENIZOR_PATH, 'r') as tok:
