@@ -97,4 +97,4 @@ def check_answer():
 
 if __name__ == "__main__":
     # Run the Flask app in debug mode for development purposes
-    app.run(debug=True)
+    app.run(debug=False)
