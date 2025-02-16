@@ -36,7 +36,7 @@ def generate_question():
     try:
         # Retrieve parameters from the request, with default values
         difficulty = request.args.get("difficulty", "Beginner")  # Default difficulty: Beginner
-        informatie = request.args.getlist("informatie", type=int)  # List of success counts per question type
+        informatie = request.args.getlist("information", type=int)  # List of success counts per question type
 
         # If no specific information is provided, use default values [1, 1, 1, 1]
         if not informatie:
@@ -48,7 +48,7 @@ def generate_question():
         # Return the generated question as JSON
         return jsonify({
             "status": "success",
-            "question": question
+            "question": str(question)
         })
 
     except Exception as e:
@@ -63,13 +63,13 @@ def check_answer():
         data = request.json
 
         # Validate that all required fields are present
-        if not data or 'berekeningen' not in data or 'student_antwoord' not in data or 'vraag' not in data:
+        if not data or 'calculations' not in data or 'final_answer' not in data or 'question' not in data:
             return jsonify({"status": "error", "message": "Missing required fields"}), 400
 
         # Extract relevant data from the request
-        student_calc = data.get("berekeningen").replace("**", "^").replace(":", "/")  # Student's calculations (adjusted for syntax)
-        student_answer = data.get("student_antwoord")  # Student's final answer
-        question = data.get("vraag")  # The question the student attempted
+        student_calc = data.get("calculations").replace("**", "^").replace(":", "/")  # Student's calculations (adjusted for syntax)
+        student_answer = data.get("final_answer")  # Student's final answer
+        question = data.get("question")  # The question the student attempted
 
         # Check the student's answer using vragenscript
         correct = vs.check(question, student_answer)  # Function check(gekozen_vraag, studenten_antwoord)
