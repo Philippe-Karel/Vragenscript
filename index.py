@@ -18,10 +18,10 @@ MODEL_PATH = "AI/fouten_AI (1).keras"
 ai = tensorflow.keras.models.load_model(MODEL_PATH)
 
 # Tokenizer initialisen
-TOKENIZOR_PATH = "AI/tokenizer (1).json"
-with open(TOKENIZOR_PATH, 'r') as tok:
+TOKENIZER_PATH = "AI/tokenizer (1).json"
+with open(TOKENIZER_PATH, 'r') as tok:
     tok_config = tok.read()
-tokenizor = tokenizor_from_json(tok_config)
+tokenizer = tokenizer_from_json(tok_config)
 
 # Soorten fouten noteren voor de AI
 soorten_fouten = [0, 1, 2, 3]
