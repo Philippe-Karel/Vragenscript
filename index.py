@@ -67,7 +67,7 @@ def check_answer():
             return jsonify({"status": "error", "message": "Missing required fields"}), 400
 
         # Extract relevant data from the request
-        student_calc = data.get("calculations").replace("**", "^").replace(":", "/")  # Student's calculations (adjusted for syntax)
+        student_calc = data.get("calculations", "").replace("**", "^").replace(":", "/")  # Student's calculations (adjusted for syntax)
         student_answer = data.get("final_answer")  # Student's final answer
         question = data.get("question")  # The question the student attempted
 
@@ -85,9 +85,9 @@ def check_answer():
 
         else:  # If the answer is incorrect
             calc_seq = tokenizer.texts_to_sequences(student_calc)
-            calc_pad = pad_sequences(calc_sec, padding='post')
-            mistakes_AI = ai.predict(student_calculations)
-            mistakes = [ind for ind, waarde in mistakes_AI if waarde > 0.5]
+            calc_pad = pad_sequences(calc_seq, padding='post')
+            mistakes_AI = ai.predict(calc_pad)
+            mistakes = [ind for ind, waarde in enumerate(mistakes_AI) if waarde > 0.5]
             
             # Return the analysis results and mark the answer as wrong
             return jsonify({
