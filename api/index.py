@@ -4,10 +4,12 @@ import vragenscript as vs
 import numpy as np
 
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from tensorflow.keras.preprocessing.text import Tokenizer, tokenizer_from_json
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 app = Flask(__name__)
+CORS(app)
 
 # AI initialisen
 MODEL_PATH = "ai_model/fouten_AI.keras"
