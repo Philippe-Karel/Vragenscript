@@ -64,7 +64,8 @@ def check_answer():
 
         # Validate that all required fields are present
         if not data or 'calculation' not in data or 'final_answer' not in data or 'question' not in data:
-            return jsonify({"status": "error", "message": "Missing required fields"}), 400
+            return data
+            #return jsonify({"status": "error", "message": "Missing required fields"}), 400
 
         # Extract relevant data from the request
         student_calc = data.get("calculation", "").replace("**", "^").replace(":", "/")  # Student's calculation (adjusted for syntax)
