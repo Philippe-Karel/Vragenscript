@@ -55,7 +55,7 @@ def generate_question():
         # Handle errors gracefully and return an error response
         return jsonify({"status": "error", "message": str(e)}), 500
 
-# Endpoint to check a student's answer and analyze their calculations if needed
+# Endpoint to check a student's answer and analyze their calculation if needed
 @app.route("/vraag_nakijken", methods=["POST"])
 def check_answer():
     try:
@@ -63,11 +63,11 @@ def check_answer():
         data = request.json
 
         # Validate that all required fields are present
-        if not data or 'calculations' not in data or 'final_answer' not in data or 'question' not in data:
+        if not data or 'calculation' not in data or 'final_answer' not in data or 'question' not in data:
             return jsonify({"status": "error", "message": "Missing required fields"}), 400
 
         # Extract relevant data from the request
-        student_calc = data.get("calculations", "").replace("**", "^").replace(":", "/")  # Student's calculations (adjusted for syntax)
+        student_calc = data.get("calculation", "").replace("**", "^").replace(":", "/")  # Student's calculation (adjusted for syntax)
         student_answer = data.get("final_answer")  # Student's final answer
         question = data.get("question")  # The question the student attempted
 
