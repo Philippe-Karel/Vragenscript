@@ -74,7 +74,6 @@ def check_answer():
 
         if correct[-1] == True:  # If there's an error in the student's response format
             return jsonify({"status": "student_error", "message": "Invalid response format"}), 400
-            break
 
         elif correct[0] == True:  # If the answer is correct
             return jsonify({
