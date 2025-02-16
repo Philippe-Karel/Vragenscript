@@ -15,7 +15,7 @@ CORS(app)
 
 # AI initialisen
 MODEL_PATH = "AI/fouten_AI (1).keras"
-ai = tf.keras.models.load_model(MODEL_PATH)
+ai = tensorflow.keras.models.load_model(MODEL_PATH)
 
 # Tokenizer initialisen
 TOKENIZOR_PATH = "AI/tokenizer (1).json"
