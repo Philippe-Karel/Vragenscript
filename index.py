@@ -1,3 +1,4 @@
+import os
 import tensorflow 
 import json
 import vragenscript as vs
@@ -99,5 +100,5 @@ def check_answer():
         return jsonify({"status": "error", "message": str(e)}), 500
 
 if __name__ == "__main__":
-    # Run the Flask app in debug mode for development purposes
-    app.run(debug=False)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
