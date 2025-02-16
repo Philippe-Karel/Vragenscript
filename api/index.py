@@ -26,9 +26,9 @@ tokenizor = tokenizor_from_json(tok_config)
 # Soorten fouten noteren voor de AI
 soorten_fouten = [0, 1, 2, 3]
 
-@app.route("/")
+@app.route("/", methods=['GET'])
 def home():
-    return "Dit is de homepagina, hier hoor je niet te zijn"
+    return "<h1> Dit is de homepagina, hier hoor je niet te zijn </h1>"
 
 # Endpoint to generate a question
 @app.route("/vraag_maken", methods=["GET"])
