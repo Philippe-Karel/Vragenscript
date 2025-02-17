@@ -97,8 +97,8 @@ def check_answer():
                 "mistakes": mistakes  # Feedback on calculation mistakes
             })
 
-    else:
-        return jsonify({"status": "error"})
+        else:
+            return jsonify({"status": "error"})
 
     except Exception as e:
         # Handle errors gracefully and return an error response
