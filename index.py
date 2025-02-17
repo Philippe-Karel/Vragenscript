@@ -47,7 +47,7 @@ def generate_question():
         # Return the generated question as JSON
         return jsonify({
             "status": "success",
-            "question": str(question)
+            "question": str(question).replace("**", "^")
         })
 
     except Exception as e:
@@ -69,7 +69,7 @@ def check_answer():
         # Extract relevant data from the request
         student_calc = data.get("calculation", "").replace("**", "^").replace(":", "/")  # Student's calculation (adjusted for syntax)
         student_answer = data.get("final_answer")  # Student's final answer
-        question = data.get("question")  # The question the student attempted
+        question = data.get("question").replace("^", "**")  # The question the student attempted
 
         # Check the student's answer using vragenscript
         correct = vs.check(question, student_answer)  # Function check(gekozen_vraag, studenten_antwoord)
