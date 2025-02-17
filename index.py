@@ -1,31 +1,29 @@
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-import tensorflow 
+#import tensorflow 
 import json
 import vragenscript as vs
-import numpy as np
-import pickle
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from tensorflow.keras.preprocessing.text import Tokenizer, tokenizer_from_json
-from tensorflow.keras.preprocessing.sequence import pad_sequences
+#from tensorflow.keras.preprocessing.text import Tokenizer, tokenizer_from_json
+#from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 app = Flask(__name__)
 CORS(app)
 
 # AI initialisen
-MODEL_PATH = "AI/fouten_AI (1).keras"
-ai = tensorflow.keras.models.load_model(MODEL_PATH, compile=False)
+#MODEL_PATH = "AI/fouten_AI (1).keras"
+#ai = tensorflow.keras.models.load_model(MODEL_PATH, compile=False)
 
 # Tokenizer initialisen
-TOKENIZER_PATH = "AI/tokenizer (1).json"
-with open(TOKENIZER_PATH, 'r') as tok:
-    tok_config = tok.read()
-tokenizer = tokenizer_from_json(tok_config)
+#TOKENIZER_PATH = "AI/tokenizer (1).json"
+#with open(TOKENIZER_PATH, 'r') as tok:
+    #tok_config = tok.read()
+#tokenizer = tokenizer_from_json(tok_config)
 
 # Soorten fouten noteren voor de AI
-soorten_fouten = [0, 1, 2, 3]
+#soorten_fouten = [0, 1, 2, 3]
 
 @app.route("/", methods=['GET'])
 def home():
@@ -77,12 +75,13 @@ def check_answer():
         correct = vs.check(question, student_answer)  # Function check(gekozen_vraag, studenten_antwoord)
 
         if correct[-1] == True:  # If there's an error in the student's response format
-            return jsonify({"status": "student_error", "message": "Invalid response format"}), 400
+            return jsonify({"status": "student_error", "message": "Invalid response format"})
 
         elif correct[0] == True:  # If the answer is correct
             return jsonify({
                 "status": "success",  # Indicates success
-                "constante": correct[1]  # Additional information if needed
+                "constante": correct[1],  # Additional information if needed
+                "juist": correct[2]
             })
 
         elif correct[0] == False:  # If the answer is incorrect
@@ -90,13 +89,12 @@ def check_answer():
             #calc_pad = pad_sequences(calc_seq, padding='post')
             #mistakes_AI = ai.predict(calc_pad)
             #mistakes = [ind for ind, waarde in enumerate(mistakes_AI) if waarde > 0.5]
-            mistakes = [1, 2, 3, 4]
             
             # Return the analysis results and mark the answer as wrong
             return jsonify({
                 "status": "wrong",  # Indicates the answer is wrong
                 "constante": correct[1],
-                "mistakes": mistakes  # Feedback on calculation mistakes
+                "juist": correct[2]  # Feedback on calculation mistakes
             })
 
         else:
