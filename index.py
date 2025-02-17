@@ -86,10 +86,11 @@ def check_answer():
             })
 
         elif correct[0] == False:  # If the answer is incorrect
-            calc_seq = tokenizer.texts_to_sequences([student_calc])
-            calc_pad = pad_sequences(calc_seq, padding='post')
-            mistakes_AI = ai.predict(calc_pad)
-            mistakes = [ind for ind, waarde in enumerate(mistakes_AI) if waarde > 0.5]
+            #calc_seq = tokenizer.texts_to_sequences([student_calc])
+            #calc_pad = pad_sequences(calc_seq, padding='post')
+            #mistakes_AI = ai.predict(calc_pad)
+            #mistakes = [ind for ind, waarde in enumerate(mistakes_AI) if waarde > 0.5]
+            mistakes = [1, 2, 3, 4]
             
             # Return the analysis results and mark the answer as wrong
             return jsonify({
