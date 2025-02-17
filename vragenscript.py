@@ -133,7 +133,7 @@ def meerderetermen_vragen(difficulty='Beginner'):
 
   while aantal < highest_aantal:
     aantal += 1
-    keuzes = [machtsregel_vragen(difficulty), e_vragen(difficulty), log_vragen(difficulty)]
+    keuzes = [machtsregel_vragen(difficulty), log_vragen(difficulty)]
     waarde += rt.choice(keuzes)
 
   return waarde
