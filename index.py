@@ -81,7 +81,7 @@ def check_answer():
             return jsonify({
                 "status": "success",  # Indicates success
                 "constante": correct[1],  # Additional information if needed
-                "juist": correct[2]
+                "juist": str(correct[2])
             })
 
         elif correct[0] == False:  # If the answer is incorrect
@@ -94,7 +94,7 @@ def check_answer():
             return jsonify({
                 "status": "wrong",  # Indicates the answer is wrong
                 "constante": correct[1],
-                "juist": correct[2]  # Feedback on calculation mistakes
+                "juist": str(correct[2])  # Feedback on calculation mistakes
             })
 
         else:
