@@ -147,24 +147,26 @@ def keuze(informatie=[1, 1, 1, 1], difficulty="Beginner"):
 
   return rt.choice(kans)
 
-def check(vraag, antwoord):
+def check(gekozen, antwoord):
   try:
-    juist = smp.integrate(vraag) # Berekent de juiste integraal
+    omzet = smp.sympify(gekozen).subs('x', x)
+    juist = smp.integrate(omzet) # Berekent de juiste integraal
     constante = True
-    leerling_antwoord = ''.join(value if not value.isalpha() or value not in 'abdefghijklmnopqrstuvwyz' else 'c' for value in leerling.lower()) # Zorgt voor de juiste constante
+    leerling_antwoord = ''.join(value if not value.isalpha() or value not in 'abdefghijklmnopqrstuvwyz' else 'c' for value in antwoord.lower()) # Zorgt voor de juiste constante
 
     if 'c' not in leerling_antwoord: # Kijkt of er een constante is
       constante = False
 
     leerling_smp = smp.sympify(leerling_antwoord.replace('^', '**')) # Zet het om naar een sympy vergelijking. Hieronder wordt de juiste variabele toegediend en de constante weggehaald
-    leerling = smp.simplify(leerling_smp - smp.Symbol('c')).subs('x', x) # Zat hier een goed uur op vast. Antwoord van een leerling maakt de x een str en niet de pre-defined x variabele
+    leerling = smp.simplify(leerling_smp - smp.Symbol('c')).subs('x', x) if constante else smp.simplify(leerling_smp).subs('x', x) 
+    # Zat hier een goed uur op vast. Antwoord van een leerling maakt de x een str en niet de pre-defined x variabele
 
     if leerling != juist:  # Eerste waarde is om te kijken of je de vraag goed hebt, 2e of er een constante is
-      constante = None
       return False, constante, False
 
     return True, constante, False
 
   except Exception as exc:
     print(f'Er is iets fout gegaan, vraag wordt fout gerekend en niks wordt geüpdate')
+    print(exc)
     return False, None, True # Hier is een derde waarde voor als er een foutmelding is. Om die reden is de 2e onbekent want er kan niet gekeken worden voor een constante
