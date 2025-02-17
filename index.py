@@ -4,6 +4,7 @@ import tensorflow
 import json
 import vragenscript as vs
 import numpy as np
+import pickle
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -15,7 +16,7 @@ CORS(app)
 
 # AI initialisen
 MODEL_PATH = "AI/fouten_AI (1).keras"
-ai = tensorflow.keras.models.load_model(MODEL_PATH)
+ai = tensorflow.keras.models.load_model(MODEL_PATH, compile=False)
 
 # Tokenizer initialisen
 TOKENIZER_PATH = "AI/tokenizer (1).json"
@@ -85,7 +86,7 @@ def check_answer():
             })
 
         elif correct[0] == False:  # If the answer is incorrect
-            calc_seq = tokenizer.texts_to_sequences(student_calc)
+            calc_seq = tokenizer.texts_to_sequences([student_calc])
             calc_pad = pad_sequences(calc_seq, padding='post')
             mistakes_AI = ai.predict(calc_pad)
             mistakes = [ind for ind, waarde in enumerate(mistakes_AI) if waarde > 0.5]
