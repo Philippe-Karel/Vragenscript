@@ -60,7 +60,7 @@ def generate_question():
 def check_answer():
     try:
         # Retrieve JSON data from the request
-        data = request.json
+        data = request.get_json()
 
         # Validate that all required fields are present
         if not data or 'calculation' not in data or 'final_answer' not in data or 'question' not in data:
