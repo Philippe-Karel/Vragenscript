@@ -141,8 +141,8 @@ def meerderetermen_vragen(difficulty='Beginner'):
 
 # Hier komt een functie die een keuze maakt op basis van database informatie. De informatie zal een array zijn met alle foutsoorten die de leerling heeft en daarmee wordt een kans genomen
 def keuze(informatie=[1, 1, 1, 1], difficulty="Beginner"):
-  #opties = [machtsregel_vragen(difficulty), e_vragen(difficulty), log_vragen(difficulty), meerderetermen_vragen(difficulty)]
-  opties = [machtsregel_vragen(difficulty), machtsregel_vragen(difficulty), machtsregel_vragen(difficulty), machtsregel_vragen(difficulty)]
+  opties = [machtsregel_vragen(difficulty), e_vragen(difficulty), log_vragen(difficulty), meerderetermen_vragen(difficulty)]
+  #opties = [machtsregel_vragen(difficulty), machtsregel_vragen(difficulty), machtsregel_vragen(difficulty), machtsregel_vragen(difficulty)]
   kans = [functie * opties[ind] for ind, functie in enumerate(informatie)]
 
   return rt.choice(kans)
