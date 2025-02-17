@@ -162,9 +162,9 @@ def check(gekozen, antwoord):
     # Zat hier een goed uur op vast. Antwoord van een leerling maakt de x een str en niet de pre-defined x variabele
 
     if leerling != juist:  # Eerste waarde is om te kijken of je de vraag goed hebt, 2e of er een constante is
-      return False, constante, False
+      return False, constante, juist, False
 
-    return True, constante, False
+    return True, constante, juist, False
 
   except Exception as exc:
     print(f'Er is iets fout gegaan, vraag wordt fout gerekend en niks wordt geüpdate')
