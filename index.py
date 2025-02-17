@@ -84,7 +84,7 @@ def check_answer():
                 "constante": correct[1]  # Additional information if needed
             })
 
-        else:  # If the answer is incorrect
+        elif correct[0] == False:  # If the answer is incorrect
             calc_seq = tokenizer.texts_to_sequences(student_calc)
             calc_pad = pad_sequences(calc_seq, padding='post')
             mistakes_AI = ai.predict(calc_pad)
@@ -96,6 +96,9 @@ def check_answer():
                 "constante": correct[1],
                 "mistakes": mistakes  # Feedback on calculation mistakes
             })
+
+    else:
+        return jsonify({"status": "error"})
 
     except Exception as e:
         # Handle errors gracefully and return an error response
